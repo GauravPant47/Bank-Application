@@ -1,7 +1,5 @@
 package registration;
 
-import java.util.Scanner;
-
 public class LoginId extends RegistrationForm{
 	private String userName;
 	private String password2;
@@ -18,22 +16,7 @@ public class LoginId extends RegistrationForm{
 	}
 	public void setPassword2(String password2) {
 		this.password2 = password2;
-	}
-	public LoginId() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("********************************");
-
-		System.out.println("Enter user user name : ");
-		String username = sc.nextLine();
-		setUserName(username);
-		System.out.println("********************************");
-		System.out.println("Enter user password : ");
-		String password3 = sc.nextLine();
-		setPassword2(password3);
-		System.out.println("********************************");
-	}
-	
-	
+	}	
 }
 
 
