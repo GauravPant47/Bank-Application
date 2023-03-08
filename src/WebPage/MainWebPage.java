@@ -1,10 +1,10 @@
 package WebPage;
 
-import registration.RegistrationForm;
+import registration.DatabaseConnection;
 
 public class MainWebPage {
 	public static void main(String[] args) {
-		RegistrationForm rf = new RegistrationForm();
+		DatabaseConnection dc = new DatabaseConnection();
 		
 	}
 }
