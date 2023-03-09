@@ -19,7 +19,7 @@ public class DatabaseConnection {
 		System.out.println("*************************");
 		System.out.println("Enter user first name : ");
 		String first_name = sc.nextLine();
-		rf.setFirstName(first_name);
+		rf.setFirstName(first_name+" ");
 		/*
 		 * ********
 		 */
@@ -31,9 +31,17 @@ public class DatabaseConnection {
 		 * ********
 		 */
 		System.out.println("*************************");
-		System.out.println("Enter gender : ");
+		System.out.println("Enter gender : \nIf male=(m)//female=(f)//other=(O)");
 		String gender = sc.nextLine();
-		rf.setGender(gender);
+		gender = gender.toUpperCase();
+		if(gender.equals("Y")) {
+			rf.setGender(gender);
+		}else if (gender.equals("F")) {
+			rf.setGender(gender);
+		}else if(gender.equals("O")){
+			rf.setGender(gender);
+		}
+		
 		/*
 		 * ********
 		 */
@@ -41,7 +49,15 @@ public class DatabaseConnection {
 		System.out.println("Enter Email id : ");
 		String gmail_Id = sc.nextLine();
 		String emailId = email_Validation(gmail_Id);
-		rf.setGamilId(emailId);
+
+		for (int i = 0; i <= emailId.length(); i++) {
+			if (emailId == null) {
+				break;	
+			} else {
+				rf.setGamilId(emailId);
+			}
+		}
+
 		/*
 		 * ********
 		 */
@@ -68,6 +84,9 @@ public class DatabaseConnection {
 		 * ********
 		 */
 		System.out.println("*************************");
+		System.out.println("");
+		String update = sc.nextLine();
+		update=update.toLowerCase();
 
 	}
 
@@ -102,9 +121,9 @@ public class DatabaseConnection {
 
 		if (code1 > 0 && code2 > 0) {
 			System.out.println("Valid Email Id...");
-			return "valid Password";
+			return gmail_Id;
 		} else {
-			System.err.println("InValid Email Id...");
+			System.err.println("Invalid Email Id...");
 			return gmail_Id;
 
 		}
