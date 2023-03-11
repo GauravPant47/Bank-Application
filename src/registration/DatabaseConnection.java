@@ -2,6 +2,8 @@ package registration;
 
 import java.util.Scanner;
 
+import CustomerAccountDetails.UserDetails;
+
 public class DatabaseConnection {
 	public DatabaseConnection() {
 
@@ -10,16 +12,17 @@ public class DatabaseConnection {
 		 */
 		Scanner sc = new Scanner(System.in);
 		/*
-		 * creating a RegistrationForm object
+		 * creating a RegistrationForm and LoginId object
 		 */
 		RegistrationForm rf = new RegistrationForm();
+		LoginId sin = new LoginId();
 		/*
 		 * updating data in RegistrationForm
 		 */
 		System.out.println("*************************");
 		System.out.println("Enter user first name : ");
 		String first_name = sc.nextLine();
-		rf.setFirstName(first_name+" ");
+		rf.setFirstName(first_name + " ");
 		/*
 		 * ********
 		 */
@@ -34,14 +37,14 @@ public class DatabaseConnection {
 		System.out.println("Enter gender : \nIf male=(m)//female=(f)//other=(O)");
 		String gender = sc.nextLine();
 		gender = gender.toUpperCase();
-		if(gender.equals("Y")) {
+		if (gender.equals("M")) {
 			rf.setGender(gender);
-		}else if (gender.equals("F")) {
+		} else if (gender.equals("F")) {
 			rf.setGender(gender);
-		}else if(gender.equals("O")){
+		} else if (gender.equals("O")) {
 			rf.setGender(gender);
 		}
-		
+
 		/*
 		 * ********
 		 */
@@ -49,15 +52,7 @@ public class DatabaseConnection {
 		System.out.println("Enter Email id : ");
 		String gmail_Id = sc.nextLine();
 		String emailId = email_Validation(gmail_Id);
-
-		for (int i = 0; i <= emailId.length(); i++) {
-			if (emailId == null) {
-				break;	
-			} else {
-				rf.setGamilId(emailId);
-			}
-		}
-
+		rf.setGamilId(emailId);
 		/*
 		 * ********
 		 */
@@ -77,17 +72,102 @@ public class DatabaseConnection {
 		 * ********
 		 */
 		System.out.println("*************************");
-		System.out.println("Enter password : ");
+		System.out.println("Enter password : "
+				+ "\nEnter 8 to 15 characters\n1 uppercase\n1 lowercase\n1 number\n1 special character(#,$,%,&)");
 		String paw = sc.nextLine();
 		String pass1 = password_Validation(paw);
+		rf.setPassword(pass1);
+
 		/*
 		 * ********
 		 */
 		System.out.println("*************************");
-		System.out.println("");
-		String update = sc.nextLine();
-		update=update.toLowerCase();
 
+		System.out.println("**Enter**");
+		sc.nextLine();
+
+		System.out.println("Name : " + rf.getFirstName() + rf.getLastName());
+
+		System.out.println("Gemder : " + rf.getGender());
+
+		System.out.println("Email Id : " + rf.getGamilId());
+
+		System.out.println("Mobile.No : " + rf.getMobileNumber());
+
+		System.out.println("User Id : " + rf.getuserId());
+
+		System.out.println("User Password : " + rf.getPassword());
+		sc.nextLine();
+		System.out.println("**Enter**");
+
+		System.out.println("Data will be stor... ");
+		System.out.println("Do You want to Login your Acount : (Y/N)");
+
+		String update = sc.nextLine();
+		update = update.toLowerCase();
+
+		if (update.equals("y")) {
+			System.out.println("Enter UserId : ");
+			String userId1 = sc.nextLine();
+			sin.setUserName(userId1);
+
+			System.out.println("*************************");
+
+			System.out.println("Enter tha user password : ");
+			String paw1 = sc.nextLine();
+			String pass2 = verification2(paw1);
+			sin.setPassword2(pass2);
+			System.out.println("*************************");
+		} else {
+			System.err.println("Updating there a bank policy...");
+		}
+		if (rf.getuserId().equals(sin.getUserName()) && rf.getPassword().equals(sin.getPassword2())) {
+			System.out.println("Welcome Our bank WebSide");
+			/*
+			 * Transfer to user details class 
+			 */
+			UserDetails ud = new UserDetails();
+		} else {
+			System.err.println("Invalid Password");
+		}
+	}
+
+	/*
+	 * 
+	 * here we are verify the login time our password password are ok are not
+	 * 
+	 */
+	private String verification2(String paw1) {
+		int code1 = 0, code2 = 0, code3 = 0, code4 = 0;
+
+		if (paw1.length() >= 8 && paw1.length() <= 15) {
+			for (int i = 0; i <= paw1.length() - 1; i++) {
+				if (paw1.contains(" ")) {
+					System.out.println("Wrong way to fill do not give any Space : ");
+				} else {
+					if (paw1.charAt(i) >= 'A' && paw1.charAt(i) <= 'Z') {
+						code1++;
+					}
+					if (paw1.charAt(i) >= 'a' && paw1.charAt(i) <= 'z') {
+						code2++;
+					}
+					if (paw1.charAt(i) >= '0' && paw1.charAt(i) <= '9') {
+						code3++;
+					}
+					if (paw1.charAt(i) >= 35 && paw1.charAt(i) <= 38) {
+						code4++;
+					}
+				}
+			}
+		} else {
+			System.out.println("Invalid password... ");
+		}
+		if (code1 > 0 && code2 > 0 && code3 > 0 && code4 > 0) {
+			return paw1;
+		} else {
+			System.err.println("Invalid Password...");
+			return paw1;
+		}
 	}
 
 	/*
@@ -120,7 +200,7 @@ public class DatabaseConnection {
 		 */
 
 		if (code1 > 0 && code2 > 0) {
-			System.out.println("Valid Email Id...");
+
 			return gmail_Id;
 		} else {
 			System.err.println("Invalid Email Id...");
@@ -135,16 +215,14 @@ public class DatabaseConnection {
 	 */
 	private String number_Validation(String mobile_Number) {
 		int code1 = 0, code2 = 0;
-		if (mobile_Number.length() == 10) {
+		if (mobile_Number.length() >= 10 && mobile_Number.length() <= 15) {
 			for (int i = 0; i <= mobile_Number.length() - 1; i++) {
 				if (mobile_Number.contains(" ")) {
 					System.err.println("Update Wright Mobile number...");
 					break;
 				} else {
-					if (mobile_Number.charAt(i) >= 0 && mobile_Number.charAt(i) <= 9) {
+					if (mobile_Number.charAt(i) >= '0' && mobile_Number.charAt(i) <= '9') {
 						code1++;
-					} else {
-						break;
 					}
 				}
 			}
@@ -154,9 +232,10 @@ public class DatabaseConnection {
 		}
 
 		if (code1 > 0) {
-			return "Valid Mobile Number...";
+			return mobile_Number;
 		} else {
-			return "Invalid Mobile Number...";
+			System.err.println("Invalid Mobile Number...");
+			return mobile_Number;
 		}
 
 	}
@@ -175,23 +254,15 @@ public class DatabaseConnection {
 				} else {
 					if (paw.charAt(i) >= 'A' && paw.charAt(i) <= 'Z') {
 						code1++;
-					} else {
-						break;
 					}
 					if (paw.charAt(i) >= 'a' && paw.charAt(i) <= 'z') {
 						code2++;
-					} else {
-						break;
 					}
-					if (paw.charAt(i) >= 0 && paw.charAt(i) <= 9) {
+					if (paw.charAt(i) >= '0' && paw.charAt(i) <= '9') {
 						code3++;
-					} else {
-						break;
 					}
-					if (paw.charAt(i) >= 35 && paw.charAt(i) <= 46) {
+					if (paw.charAt(i) >= 35 && paw.charAt(i) <= 38) {
 						code4++;
-					} else {
-						break;
 					}
 				}
 			}
@@ -200,10 +271,10 @@ public class DatabaseConnection {
 //			break;
 		}
 		if (code1 > 0 && code2 > 0 && code3 > 0 && code4 > 0) {
-			System.out.println("Valid Password...");
-			return "valid Password";
+			return paw;
 		} else {
-			return "Invalid Password";
+			System.err.println("Invalid Password...");
+			return paw;
 		}
 	}
 
